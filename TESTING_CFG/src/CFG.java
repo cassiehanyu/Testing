@@ -52,7 +52,8 @@ public class CFG {
 			nodes.add(node2);
 		}
 		if(!edges.containsKey(node1)){
-			edges.put(node1, new HashSet<>());
+//			Set<Node> edges_node1 = new HashSet<>();
+			edges.put(node1, new HashSet<Node>());
 		}
 //		if(!edges.containsKey(node2)){
 //			edges.put(node2, new HashSet<>());
