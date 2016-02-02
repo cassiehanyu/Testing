@@ -84,13 +84,13 @@ public class CFG {
 		Node node1 = new Node(p1,m1,c1);
 		Node node2 = new Node(p2,m2,c2);
 		boolean found = false;
-		Map<Node, Boolean> visited = new HashMap<>();
+		HashMap<Node, Boolean> visited = new HashMap<>();
 		Stack<Node> stack = new Stack<>();
 		for(Node node : nodes){
-			visited.put(node,false);
+			visited.put(node,new Boolean(false));
 		}
 		if(nodes.contains(node1)){
-			visited.put(node1,true);
+			visited.put(node1,new Boolean(true));
 			stack.push(node1);
 		}else{
 			return found;
@@ -123,18 +123,4 @@ public class CFG {
 //		return isReachable(node1,node2,visited);
     }
 
-	public boolean isReachable(Node node1, Node node2, Map<Node,Boolean> visited){
-		if(node1.equals(node2)){
-			return true;
-		}
-		boolean found = false;
-		visited.replace(node1,true);
-		for(Node node : edges.get(node1)){
-			if(visited.get(node) == false){
-				found = isReachable(node,node2,visited);
-				if(found) break;
-			}
-		}
-		return found;
-	}
 }
