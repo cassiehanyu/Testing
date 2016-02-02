@@ -55,10 +55,9 @@ public class CFG {
 //			Set<Node> edges_node1 = new HashSet<>();
 			edges.put(node1, new HashSet<Node>());
 		}
-//		if(!edges.containsKey(node2)){
-//			edges.put(node2, new HashSet<>());
-//		}
-		edges.get(node1).add(node2);
+		if(!edges.get(node1).contains(node2)) {
+			edges.get(node1).add(node2);
+		}
     }
 	
 	public void deleteNode(int p, MethodNode m, ClassNode c) {

@@ -69,6 +69,21 @@ public class CFGTest {
     }
 
     @Test
+    public void addEdge_duplicate() {
+        cfg.addEdge(1000,m_m,m,
+                1001,m_m,m);
+        cfg.addEdge(1000,m_m,m,
+                1001,m_m,m);
+        CFG.Node n = new CFG.Node(1000, m_m, m);
+        CFG.Node nn = new CFG.Node(1001, m_m, m);
+
+        cfg.deleteEdge(1000,m_m,m,
+                1001,m_m,m);
+
+        assertTrue(!cfg.edges.get(n).contains(nn));
+    }
+
+    @Test
     public void addEdge_oneNewNode() {
         cfg.addNode(1000, m_m, m);
         cfg.addEdge(1000, m_m, m, 1001, m_m, m);
@@ -199,40 +214,40 @@ public class CFGTest {
 
     }
 
-//    @Test
-//    public void deleteEdge_missingTargetNode() {
-//        CFG.Node n = new CFG.Node(1000, m_m, m);
-//        CFG.Node nn = new CFG.Node(1001, m_m, m);
-//
-//        //make sure the source node is missing
-//        Assume.assumeTrue(!cfg.nodes.contains(nn));
-//
-//        cfg.addNode(n.position, n.method, n.clazz);
-//
-//        Map<CFG.Node, Set<CFG.Node>> expected = new HashMap<CFG.Node, Set<CFG.Node>>();
-//
-//        for(CFG.Node m : cfg.edges.keySet()) {
-//            CFG.Node mCopy = new CFG.Node(m.position, m.method, m.clazz);
-//            Set<CFG.Node> mNeighbours = cfg.edges.get(m);
-//            Set<CFG.Node> mNeighboursCopy = new HashSet<CFG.Node>();
-//
-//            for(CFG.Node mm : mNeighbours) {
-//                CFG.Node mmCopy = new CFG.Node(mm.position, mm.method, mm.clazz);
-//                mNeighboursCopy.add(mmCopy);
-//            }
-//
-//            expected.put(mCopy, mNeighboursCopy);
-//        }
-//
-//
-//        // try to remove a non-existing edge
-//        cfg.deleteEdge(n.position, n.method, n.clazz, nn.position, nn.method,
-//                nn.clazz);
-//
-//        // there must be no change in edges.
-//        assertEquals(expected, cfg.edges);
-//
-//    }
+    @Test
+    public void deleteEdge_missingTargetNode() {
+        CFG.Node n = new CFG.Node(1000, m_m, m);
+        CFG.Node nn = new CFG.Node(1001, m_m, m);
+
+        //make sure the source node is missing
+        Assume.assumeTrue(!cfg.nodes.contains(nn));
+
+        cfg.addNode(n.position, n.method, n.clazz);
+
+        Map<CFG.Node, Set<CFG.Node>> expected = new HashMap<CFG.Node, Set<CFG.Node>>();
+
+        for(CFG.Node m : cfg.edges.keySet()) {
+            CFG.Node mCopy = new CFG.Node(m.position, m.method, m.clazz);
+            Set<CFG.Node> mNeighbours = cfg.edges.get(m);
+            Set<CFG.Node> mNeighboursCopy = new HashSet<CFG.Node>();
+
+            for(CFG.Node mm : mNeighbours) {
+                CFG.Node mmCopy = new CFG.Node(mm.position, mm.method, mm.clazz);
+                mNeighboursCopy.add(mmCopy);
+            }
+
+            expected.put(mCopy, mNeighboursCopy);
+        }
+
+
+        // try to remove a non-existing edge
+        cfg.deleteEdge(n.position, n.method, n.clazz, nn.position, nn.method,
+                nn.clazz);
+
+        // there must be no change in edges.
+        assertEquals(expected, cfg.edges);
+
+    }
 
     @Test
     public void reachable_true() {
